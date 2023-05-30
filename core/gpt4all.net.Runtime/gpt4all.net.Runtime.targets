@@ -120,7 +120,18 @@
         </AndroidNativeLibrary>
     </ItemGroup>
     <ItemGroup Condition="$(TargetFramework.Contains('-')) == false ">
-        <!-- If using default runtime, include the split macOS libs rather that the lipoed version -->
+        <None Visible="false" Include="$(MSBuildThisFileDirectory)macos\libllama.dylib">
+            <Pack>true</Pack>
+            <PackageCopyToOutput>true</PackageCopyToOutput>
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+            <TargetPath>libllama.dylib</TargetPath>
+        </None>
+         <None Visible="false" Include="$(MSBuildThisFileDirectory)macos\libllmodel.dylib">
+            <Pack>true</Pack>
+            <PackageCopyToOutput>true</PackageCopyToOutput>
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+            <TargetPath>libllmodel.dylib</TargetPath>
+        </None>
         <None Visible="false" Include="$(MSBuildThisFileDirectory)macos\libllama.dylib">
             <Pack>true</Pack>
             <PackageCopyToOutput>true</PackageCopyToOutput>
@@ -131,7 +142,7 @@
             <Pack>true</Pack>
             <PackageCopyToOutput>true</PackageCopyToOutput>
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-            <TargetPath>runtimes/osx-arm64/libllmodel.dylib</TargetPath>
+            <TargetPath>runtimes/osx-x64/libllmodel.dylib</TargetPath>
         </None>
          <None Visible="false" Include="$(MSBuildThisFileDirectory)macos\libllama.dylib">
             <Pack>true</Pack>

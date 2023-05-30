@@ -76,11 +76,11 @@
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
             <TargetPath>runtimes/win-arm64/libllama.dll</TargetPath>
         </None> -->
-        <None Visible="false" Include="$(MSBuildThisFileDirectory)win-x64\libllama.dll">
+        <None Visible="false" Include="$(MSBuildThisFileDirectory)win-x64\llama.dll">
             <Pack>true</Pack>
             <PackageCopyToOutput>true</PackageCopyToOutput>
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-            <TargetPath>runtimes/win-x64/libllama.dll</TargetPath>
+            <TargetPath>runtimes/win-x64/llama.dll</TargetPath>
         </None>
          <None Visible="false" Include="$(MSBuildThisFileDirectory)win-x64\libllmodel.dll">
             <Pack>true</Pack>

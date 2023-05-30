@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<package>
+  <metadata>
+    <id>gpt4all.net.Runtime</id>
+    <title>gpt4all.net.Runtime</title>
+    <version>1.0.0</version>
+    <authors>Drastic Actions</authors>
+    <owners>Drastic Actions</owners>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <summary>Cross-platform dotnet runtimes for gpt4all.</summary>
+    <description>gpt4all.net.Runtime contains the native runtime libraries to enable gpt4all on .NET apps with the gpt4all .NET Bindings.</description>
+    <tags>gpt4all;ios;android;linux;windows;macos;cross-platform</tags>
+    <projectUrl>https://github.com/drasticactions/gpt4all.net.Runtime</projectUrl>
+    <license type="expression">MIT</license>
+  </metadata>
+  <files>
+    <file src="gpt4all.net.Runtime\**" target="build"/>
+  </files>
+</package>

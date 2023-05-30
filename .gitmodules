@@ -1,0 +1,6 @@
+[submodule "pygpt4all"]
+	path = pygpt4all
+	url = git@github.com:nomic-ai/pygpt4all.git
+[submodule "gpt4all"]
+	path = gpt4all
+	url = git@github.com:drasticactions/gpt4all.git

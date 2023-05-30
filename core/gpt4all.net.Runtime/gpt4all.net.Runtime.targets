@@ -70,23 +70,23 @@
         </None>
     </ItemGroup>
       <ItemGroup Condition="$(TargetFramework.Contains('-windows')) == true or $(TargetFramework.Contains('-')) == false">
-        <!-- <None Visible="false" Include="$(MSBuildThisFileDirectory)win-arm64\llama.dll">
+        <!-- <None Visible="false" Include="$(MSBuildThisFileDirectory)win-arm64\libllama.dll">
             <Pack>true</Pack>
             <PackageCopyToOutput>true</PackageCopyToOutput>
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-            <TargetPath>runtimes/win-arm64/llama.dll</TargetPath>
+            <TargetPath>runtimes/win-arm64/libllama.dll</TargetPath>
         </None> -->
-        <None Visible="false" Include="$(MSBuildThisFileDirectory)win-x64\llama.dll">
+        <None Visible="false" Include="$(MSBuildThisFileDirectory)win-x64\libllama.dll">
             <Pack>true</Pack>
             <PackageCopyToOutput>true</PackageCopyToOutput>
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-            <TargetPath>runtimes/win-x64/llama.dll</TargetPath>
+            <TargetPath>runtimes/win-x64/libllama.dll</TargetPath>
         </None>
-         <None Visible="false" Include="$(MSBuildThisFileDirectory)win-x64\llmodel.dll">
+         <None Visible="false" Include="$(MSBuildThisFileDirectory)win-x64\libllmodel.dll">
             <Pack>true</Pack>
             <PackageCopyToOutput>true</PackageCopyToOutput>
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-            <TargetPath>runtimes/win-x64/llmodel.dll</TargetPath>
+            <TargetPath>runtimes/win-x64/libllmodel.dll</TargetPath>
         </None>
     </ItemGroup>
     <ItemGroup Condition="$(AndroidSupportedAbis.Contains('x86')) or $(RuntimeIdentifiers.Contains('android-x86'))">

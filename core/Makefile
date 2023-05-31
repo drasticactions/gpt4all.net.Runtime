@@ -1,6 +1,6 @@
 BUILD_TYPE=Release
 VERSION=1.0.0
-BUILD_SHARED_LIBS=true
+BUILD_SHARED_LIBS=false
 CMAKE_COMMANDS=-DCMAKE_BUILD_TYPE=$(BUILD_TYPE) 
 TARGET=--target ggml
 
@@ -31,7 +31,7 @@ nuget:
 	mkdir -p nupkgs
 	nuget pack gpt4all.net.Runtime.nuspec -Version $(VERSION) -OutputDirectory ./nupkgs
 
-apple: macos ios ios_simulator maccatalyst tvos_simulator tvos lipo
+apple: macos ios ios_simulator maccatalyst tvos_simulator tvos copy_output
 
 android: android_x86 android_x64 android_arm64-v8a
 
@@ -77,13 +77,21 @@ ios_simulator:
 	cp build/ios_simulator/gpt4all/libllmodel.dylib runtimes/ios_simulator/libllmodel.dylib
 	cp build/ios_simulator/gpt4all/llama.cpp/libllama.dylib runtimes/ios_simulator/libllama.dylib
 
-maccatalyst:
-	rm -rf build/maccatalyst
-	cmake $(CMAKE_PARAMETERS) -DCMAKE_OSX_ARCHITECTURES="arm64;x86_64" -DCMAKE_XCODE_ATTRIBUTE_TARGETED_DEVICE_FAMILY="1,2" -S . -B build/maccatalyst
-	cmake --build build/maccatalyst
-	mkdir -p runtimes/maccatalyst
-	cp build/maccatalyst/gpt4all/libllmodel.dylib runtimes/maccatalyst/libllmodel.dylib
-	cp build/maccatalyst/gpt4all/llama.cpp/libllama.dylib runtimes/maccatalyst/libllama.dylib
+maccatalyst_x64:
+	rm -rf build/maccatalyst_x64
+	cmake $(CMAKE_PARAMETERS) -DCMAKE_SYSTEM_PROCESSOR=x86_64 -DCMAKE_HOST_SYSTEM_PROCESSOR=x86_64 -DCMAKE_SYSTEM_NAME=Darwin -DBUILD_UNIVERSAL="OFF" -DCMAKE_OSX_ARCHITECTURES="x86_64" -DCMAKE_CXX_FLAGS="-target x86_64-apple-ios13.1-macabi" -DCMAKE_C_FLAGS="-target x86_64-apple-ios13.1-macabi" -S . -B build/maccatalyst_x64
+	cmake --build build/maccatalyst_x64
+	mkdir -p runtimes/maccatalyst_x64
+	cp build/maccatalyst_x64/gpt4all/libllmodel.dylib runtimes/maccatalyst_x64/libllmodel.dylib
+	cp build/maccatalyst_x64/gpt4all/llama.cpp/libllama.dylib runtimes/maccatalyst_x64/libllama.dylib
+
+maccatalyst_arm64:
+	rm -rf build/maccatalyst_arm64
+	cmake $(CMAKE_PARAMETERS) -DCMAKE_SYSTEM_PROCESSOR=arm -DCMAKE_HOST_SYSTEM_PROCESSOR=arm64 -DCMAKE_SYSTEM_NAME=Darwin -DBUILD_UNIVERSAL="OFF" -DCMAKE_OSX_ARCHITECTURES="arm64" -DCMAKE_CXX_FLAGS="-target arm64-apple-ios13.1-macabi" -DCMAKE_C_FLAGS="-target arm64-apple-ios13.1-macabi" -S . -B build/maccatalyst_arm64
+	cmake --build build/maccatalyst_arm64
+	mkdir -p runtimes/maccatalyst_arm64
+	cp build/maccatalyst_arm64/gpt4all/libllmodel.dylib runtimes/maccatalyst_arm64/libllmodel.dylib
+	cp build/maccatalyst_arm64/gpt4all/llama.cpp/libllama.dylib runtimes/maccatalyst_arm64/libllama.dylib
 
 tvos:
 	rm -rf build/tvos
@@ -102,6 +110,11 @@ tvos_simulator:
 	cp build/tvos_simulator/gpt4all/llama.cpp/libllama.dylib runtimes/tvos_simulator/libllama.dylib
 
 lipo:
+	mkdir -p runtimes/maccatalyst
+	lipo -create runtimes/maccatalyst_x64/libllmodel.dylib -create runtimes/maccatalyst_arm64/libllmodel.dylib -output runtimes/maccatalyst/libllmodel.dylib
+	lipo -create runtimes/maccatalyst_x64/libllama.dylib -create runtimes/maccatalyst_arm64/libllama.dylib -output runtimes/maccatalyst/libllama.dylib
+
+copy_output:
 	mkdir -p gpt4all.net.Runtime/tvos-simulator
 	cp runtimes/tvos_simulator/libllmodel.dylib gpt4all.net.Runtime/tvos-simulator/libllmodel.dylib
 	cp runtimes/tvos_simulator/libllama.dylib gpt4all.net.Runtime/tvos-simulator/libllama.dylib
@@ -127,6 +140,7 @@ android_arm64-v8a:
 	cmake --build build/android-arm64-v8a
 	mkdir -p gpt4all.net.Runtime/android-arm64-v8a
 	cp build/android-arm64-v8a/gpt4all/libllmodel.so gpt4all.net.Runtime/android-arm64-v8a/libllmodel.so
+	cp build/android-arm64-v8a/gpt4all/llama.cpp/libllama.so gpt4all.net.Runtime/android-arm64-v8a/libllama.so
 
 android_x86:
 	rm -rf build/android-x86
@@ -134,6 +148,7 @@ android_x86:
 	cmake --build build/android-x86
 	mkdir -p gpt4all.net.Runtime/android-x86
 	cp build/android-x86/gpt4all/libllmodel.so gpt4all.net.Runtime/android-x86/libllmodel.so
+	cp build/android-x86/gpt4all/llama.cpp/libllama.so gpt4all.net.Runtime/android-x86/libllama.so
 
 android_x64:
 	rm -rf build/android-x86_64
@@ -141,3 +156,12 @@ android_x64:
 	cmake --build build/android-x86_64
 	mkdir -p gpt4all.net.Runtime/android-x86_64
 	cp build/android-x86_64/gpt4all/libllmodel.so gpt4all.net.Runtime/android-x86_64/libllmodel.so
+	cp build/android-x86_64/gpt4all/llama.cpp/libllama.so gpt4all.net.Runtime/android-x86_64/libllama.so
+
+xcframework_libllama:
+	mkdir -p output/lib
+	xcrun xcodebuild -create-xcframework -library gpt4all.net.Runtime/ios-device/libllama.dylib  -library gpt4all.net.Runtime/ios-simulator/libllama.dylib -library gpt4all.net.Runtime/tvos-device/libllama.dylib -library gpt4all.net.Runtime/tvos-simulator/libllama.dylib -library gpt4all.net.Runtime/macos/libllama.dylib -output output/lib/libllama.xcframework
+
+xcframework_libllmodel:
+	mkdir -p output/lib
+	xcrun xcodebuild -create-xcframework -library gpt4all.net.Runtime/ios-device/libllmodel.dylib -library gpt4all.net.Runtime/ios-simulator/libllmodel.dylib -library gpt4all.net.Runtime/tvos-device/libllmodel.dylib -library gpt4all.net.Runtime/tvos-simulator/libllmodel.dylib -library gpt4all.net.Runtime/macos/libllmodel.dylib -output output/lib/libllmodel.xcframework

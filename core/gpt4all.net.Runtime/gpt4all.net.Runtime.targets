@@ -4,13 +4,13 @@
             <Pack>true</Pack>
             <PackageCopyToOutput>true</PackageCopyToOutput>
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-            <TargetPath>libllama.dylib</TargetPath>
+            <TargetPath>Frameworks\libllama.dylib</TargetPath>
         </None>
         <None Visible="false" Include="$(MSBuildThisFileDirectory)ios-simulator\libllmodel.dylib">
             <Pack>true</Pack>
             <PackageCopyToOutput>true</PackageCopyToOutput>
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-            <TargetPath>libllmodel.dylib</TargetPath>
+            <TargetPath>Frameworks\libllmodel.dylib</TargetPath>
         </None>
     </ItemGroup>
     <ItemGroup Condition="(('$(Platform)' == 'iPhone') OR ('$(RuntimeIdentifier)' == 'ios') OR $(RuntimeIdentifier.StartsWith('ios-')) OR $(RuntimeIdentifier.StartsWith('ios.')))">
@@ -18,13 +18,13 @@
             <Pack>true</Pack>
             <PackageCopyToOutput>true</PackageCopyToOutput>
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-            <TargetPath>libllama.dylib</TargetPath>
+            <TargetPath>Frameworks\libllama.dylib</TargetPath>
         </None>
          <None Visible="false" Include="$(MSBuildThisFileDirectory)ios-device\libllmodel.dylib">
             <Pack>true</Pack>
             <PackageCopyToOutput>true</PackageCopyToOutput>
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-            <TargetPath>libllmodel.dylib</TargetPath>
+            <TargetPath>Frameworks\libllmodel.dylib</TargetPath>
         </None>
     </ItemGroup>
     <ItemGroup Condition="$(TargetFramework.Contains('-maccatalyst')) == true ">
@@ -46,13 +46,13 @@
             <Pack>true</Pack>
             <PackageCopyToOutput>true</PackageCopyToOutput>
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-            <TargetPath>libllama.dylib</TargetPath>
+            <TargetPath>Frameworks\libllama.dylib</TargetPath>
         </None>
          <None Visible="false" Include="$(MSBuildThisFileDirectory)tvos-device\libllmodel.dylib">
             <Pack>true</Pack>
             <PackageCopyToOutput>true</PackageCopyToOutput>
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-            <TargetPath>libllmodel.dylib</TargetPath>
+            <TargetPath>Frameworks\libllmodel.dylib</TargetPath>
         </None>
     </ItemGroup>
     <ItemGroup Condition="$(RuntimeIdentifier.StartsWith('tvossimulator-'))">
@@ -60,13 +60,13 @@
             <Pack>true</Pack>
             <PackageCopyToOutput>true</PackageCopyToOutput>
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-            <TargetPath>libllama.dylib</TargetPath>
+            <TargetPath>Frameworks\libllama.dylib</TargetPath>
         </None>
         <None Visible="false" Include="$(MSBuildThisFileDirectory)tvos-simulator\libllmodel.dylib">
             <Pack>true</Pack>
             <PackageCopyToOutput>true</PackageCopyToOutput>
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-            <TargetPath>libllmodel.dylib</TargetPath>
+            <TargetPath>Frameworks\libllmodel.dylib</TargetPath>
         </None>
     </ItemGroup>
       <ItemGroup Condition="$(TargetFramework.Contains('-windows')) == true or $(TargetFramework.Contains('-')) == false">

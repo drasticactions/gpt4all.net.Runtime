@@ -31,7 +31,9 @@ nuget:
 	mkdir -p nupkgs
 	nuget pack gpt4all.net.Runtime.nuspec -Version $(VERSION) -OutputDirectory ./nupkgs
 
-apple: macos ios ios_simulator maccatalyst tvos_simulator tvos copy_output
+maccatalyst: maccatalyst_x64 maccatalyst_arm64
+
+apple: macos ios ios_simulator maccatalyst tvos_simulator tvos lipo copy_output
 
 android: android_x86 android_x64 android_arm64-v8a
 
@@ -118,21 +120,27 @@ copy_output:
 	mkdir -p gpt4all.net.Runtime/tvos-simulator
 	cp runtimes/tvos_simulator/libllmodel.dylib gpt4all.net.Runtime/tvos-simulator/libllmodel.dylib
 	cp runtimes/tvos_simulator/libllama.dylib gpt4all.net.Runtime/tvos-simulator/libllama.dylib
+	# install_name_tool -add_rpath "@executable_path/../Frameworks" gpt4all.net.Runtime/tvos-simulator/libllmodel.dylib
 	mkdir -p gpt4all.net.Runtime/tvos-device
 	cp runtimes/tvos/libllmodel.dylib gpt4all.net.Runtime/tvos-device/libllmodel.dylib
 	cp runtimes/tvos/libllama.dylib gpt4all.net.Runtime/tvos-device/libllama.dylib
+	# install_name_tool -add_rpath "@executable_path/../Frameworks" gpt4all.net.Runtime/tvos-device/libllmodel.dylib
 	mkdir -p gpt4all.net.Runtime/ios-simulator
 	cp runtimes/ios_simulator/libllmodel.dylib gpt4all.net.Runtime/ios-simulator/libllmodel.dylib
 	cp runtimes/ios_simulator/libllama.dylib gpt4all.net.Runtime/ios-simulator/libllama.dylib
+	# install_name_tool -add_rpath "@executable_path/../Frameworks" gpt4all.net.Runtime/ios-simulator/libllmodel.dylib
 	mkdir -p gpt4all.net.Runtime/ios-device
 	cp runtimes/ios/libllmodel.dylib gpt4all.net.Runtime/ios-device/libllmodel.dylib
 	cp runtimes/ios/libllama.dylib gpt4all.net.Runtime/ios-device/libllama.dylib
+	# install_name_tool -add_rpath "@executable_path/../Frameworks" gpt4all.net.Runtime/ios-device/libllmodel.dylib
 	mkdir -p gpt4all.net.Runtime/macos
 	cp runtimes/macos/libllmodel.dylib gpt4all.net.Runtime/macos/libllmodel.dylib
 	cp runtimes/macos/libllama.dylib gpt4all.net.Runtime/macos/libllama.dylib
+	install_name_tool -add_rpath "@executable_path/../MonoBundle" gpt4all.net.Runtime/macos/libllama.dylib
 	mkdir -p gpt4all.net.Runtime/maccatalyst
 	cp runtimes/maccatalyst/libllmodel.dylib gpt4all.net.Runtime/maccatalyst/libllmodel.dylib
 	cp runtimes/maccatalyst/libllama.dylib gpt4all.net.Runtime/maccatalyst/libllama.dylib
+	install_name_tool -add_rpath "@executable_path/../MonoBundle" gpt4all.net.Runtime/maccatalyst/libllama.dylib
 
 android_arm64-v8a:
 	rm -rf build/android-arm64-v8a

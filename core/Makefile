@@ -61,7 +61,9 @@ macos:
 	cmake --build build/macos
 	mkdir -p runtimes/macos
 	cp build/macos/gpt4all/libllmodel.dylib runtimes/macos/libllmodel.dylib
-	cp build/macos/gpt4all/llama.cpp/libllama.dylib runtimes/macos/libllama.dylib
+	cp build/macos/gpt4all/libmpt*.dylib runtimes/macos/
+	cp build/macos/gpt4all/libgpt*.dylib runtimes/macos/ 
+	cp build/macos/gpt4all/libllama*.dylib runtimes/macos/
 
 ios:
 	rm -rf build/ios
@@ -69,7 +71,9 @@ ios:
 	cmake --build build/ios
 	mkdir -p runtimes/ios
 	cp build/ios/gpt4all/libllmodel.dylib runtimes/ios/libllmodel.dylib
-	cp build/ios/gpt4all/llama.cpp/libllama.dylib runtimes/ios/libllama.dylib
+	cp build/ios/gpt4all/libmpt*.dylib runtimes/ios/
+	cp build/ios/gpt4all/libgpt*.dylib runtimes/ios/ 
+	cp build/ios/gpt4all/libllama*.dylib runtimes/ios/
 
 ios_simulator:
 	rm -rf build/ios_simulator
@@ -77,7 +81,9 @@ ios_simulator:
 	cmake --build build/ios_simulator
 	mkdir -p runtimes/ios_simulator
 	cp build/ios_simulator/gpt4all/libllmodel.dylib runtimes/ios_simulator/libllmodel.dylib
-	cp build/ios_simulator/gpt4all/llama.cpp/libllama.dylib runtimes/ios_simulator/libllama.dylib
+	cp build/ios_simulator/gpt4all/libmpt*.dylib runtimes/ios_simulator/
+	cp build/ios_simulator/gpt4all/libgpt*.dylib runtimes/ios_simulator/ 
+	cp build/ios_simulator/gpt4all/libllama*.dylib runtimes/ios_simulator/
 
 maccatalyst_x64:
 	rm -rf build/maccatalyst_x64
@@ -85,7 +91,9 @@ maccatalyst_x64:
 	cmake --build build/maccatalyst_x64
 	mkdir -p runtimes/maccatalyst_x64
 	cp build/maccatalyst_x64/gpt4all/libllmodel.dylib runtimes/maccatalyst_x64/libllmodel.dylib
-	cp build/maccatalyst_x64/gpt4all/llama.cpp/libllama.dylib runtimes/maccatalyst_x64/libllama.dylib
+	cp build/maccatalyst_x64/gpt4all/libmpt*.dylib runtimes/maccatalyst_x64/
+	cp build/maccatalyst_x64/gpt4all/libgpt*.dylib runtimes/maccatalyst_x64/ 
+	cp build/maccatalyst_x64/gpt4all/libllama*.dylib runtimes/maccatalyst_x64/
 
 maccatalyst_arm64:
 	rm -rf build/maccatalyst_arm64
@@ -93,7 +101,9 @@ maccatalyst_arm64:
 	cmake --build build/maccatalyst_arm64
 	mkdir -p runtimes/maccatalyst_arm64
 	cp build/maccatalyst_arm64/gpt4all/libllmodel.dylib runtimes/maccatalyst_arm64/libllmodel.dylib
-	cp build/maccatalyst_arm64/gpt4all/llama.cpp/libllama.dylib runtimes/maccatalyst_arm64/libllama.dylib
+	cp build/maccatalyst_arm64/gpt4all/libmpt*.dylib runtimes/maccatalyst_arm64/
+	cp build/maccatalyst_arm64/gpt4all/libgpt*.dylib runtimes/maccatalyst_arm64/ 
+	cp build/maccatalyst_arm64/gpt4all/libllama*.dylib runtimes/maccatalyst_arm64/
 
 tvos:
 	rm -rf build/tvos
@@ -101,7 +111,9 @@ tvos:
 	cmake --build build/tvos
 	mkdir -p runtimes/tvos
 	cp build/tvos/gpt4all/libllmodel.dylib runtimes/tvos/libllmodel.dylib
-	cp build/tvos/gpt4all/llama.cpp/libllama.dylib runtimes/tvos/libllama.dylib
+	cp build/tvos/gpt4all/libmpt*.dylib runtimes/tvos/
+	cp build/tvos/gpt4all/libgpt*.dylib runtimes/tvos/ 
+	cp build/tvos/gpt4all/libllama*.dylib runtimes/tvos/
 
 tvos_simulator:
 	rm -rf build/tvos_simulator
@@ -109,38 +121,60 @@ tvos_simulator:
 	cmake --build build/tvos_simulator
 	mkdir -p runtimes/tvos_simulator
 	cp build/tvos_simulator/gpt4all/libllmodel.dylib runtimes/tvos_simulator/libllmodel.dylib
-	cp build/tvos_simulator/gpt4all/llama.cpp/libllama.dylib runtimes/tvos_simulator/libllama.dylib
+	cp build/tvos_simulator/gpt4all/libmpt*.dylib runtimes/tvos_simulator/
+	cp build/tvos_simulator/gpt4all/libgpt*.dylib runtimes/tvos_simulator/ 
+	cp build/tvos_simulator/gpt4all/libllama*.dylib runtimes/tvos_simulator/
 
 lipo:
+	chmod +x lipo_setup.zsh
+	rm -rf runtimes/maccatalyst
 	mkdir -p runtimes/maccatalyst
-	lipo -create runtimes/maccatalyst_x64/libllmodel.dylib -create runtimes/maccatalyst_arm64/libllmodel.dylib -output runtimes/maccatalyst/libllmodel.dylib
-	lipo -create runtimes/maccatalyst_x64/libllama.dylib -create runtimes/maccatalyst_arm64/libllama.dylib -output runtimes/maccatalyst/libllama.dylib
+	./lipo_setup.zsh runtimes/maccatalyst_x64 runtimes/maccatalyst_arm64 runtimes/maccatalyst
 
 copy_output:
+	chmod +x rpath_setup.zsh
+	rm -rf gpt4all.net.Runtime/tvos-simulator
 	mkdir -p gpt4all.net.Runtime/tvos-simulator
 	cp runtimes/tvos_simulator/libllmodel.dylib gpt4all.net.Runtime/tvos-simulator/libllmodel.dylib
-	cp runtimes/tvos_simulator/libllama.dylib gpt4all.net.Runtime/tvos-simulator/libllama.dylib
-	# install_name_tool -add_rpath "@executable_path/../Frameworks" gpt4all.net.Runtime/tvos-simulator/libllmodel.dylib
+	cp runtimes/tvos_simulator/libmpt*.dylib gpt4all.net.Runtime/tvos-simulator/
+	cp runtimes/tvos_simulator/libgpt*.dylib gpt4all.net.Runtime/tvos-simulator/
+	cp runtimes/tvos_simulator/libllama*.dylib gpt4all.net.Runtime/tvos-simulator/
+	./rpath_setup.zsh gpt4all.net.Runtime/tvos-simulator "@executable_path/../Frameworks"
+	rm -rf gpt4all.net.Runtime/tvos-device
 	mkdir -p gpt4all.net.Runtime/tvos-device
 	cp runtimes/tvos/libllmodel.dylib gpt4all.net.Runtime/tvos-device/libllmodel.dylib
-	cp runtimes/tvos/libllama.dylib gpt4all.net.Runtime/tvos-device/libllama.dylib
-	# install_name_tool -add_rpath "@executable_path/../Frameworks" gpt4all.net.Runtime/tvos-device/libllmodel.dylib
+	cp runtimes/tvos/libmpt*.dylib gpt4all.net.Runtime/tvos-device/
+	cp runtimes/tvos/libgpt*.dylib gpt4all.net.Runtime/tvos-device/
+	cp runtimes/tvos/libllama*.dylib gpt4all.net.Runtime/tvos-device/
+	./rpath_setup.zsh gpt4all.net.Runtime/tvos-device "@executable_path/../Frameworks"
+	rm -rf gpt4all.net.Runtime/ios-simulator
 	mkdir -p gpt4all.net.Runtime/ios-simulator
 	cp runtimes/ios_simulator/libllmodel.dylib gpt4all.net.Runtime/ios-simulator/libllmodel.dylib
-	cp runtimes/ios_simulator/libllama.dylib gpt4all.net.Runtime/ios-simulator/libllama.dylib
-	# install_name_tool -add_rpath "@executable_path/../Frameworks" gpt4all.net.Runtime/ios-simulator/libllmodel.dylib
+	cp runtimes/ios_simulator/libmpt*.dylib gpt4all.net.Runtime/ios-simulator/
+	cp runtimes/ios_simulator/libgpt*.dylib gpt4all.net.Runtime/ios-simulator/
+	cp runtimes/ios_simulator/libllama*.dylib gpt4all.net.Runtime/ios-simulator/
+	./rpath_setup.zsh gpt4all.net.Runtime/ios-simulator "@executable_path/../Frameworks"
+	rm -rf gpt4all.net.Runtime/ios-device
 	mkdir -p gpt4all.net.Runtime/ios-device
 	cp runtimes/ios/libllmodel.dylib gpt4all.net.Runtime/ios-device/libllmodel.dylib
-	cp runtimes/ios/libllama.dylib gpt4all.net.Runtime/ios-device/libllama.dylib
-	# install_name_tool -add_rpath "@executable_path/../Frameworks" gpt4all.net.Runtime/ios-device/libllmodel.dylib
+	cp runtimes/ios/libmpt*.dylib gpt4all.net.Runtime/ios-device/
+	cp runtimes/ios/libgpt*.dylib gpt4all.net.Runtime/ios-device/
+	cp runtimes/ios/libllama*.dylib gpt4all.net.Runtime/ios-device/
+	./rpath_setup.zsh gpt4all.net.Runtime/ios-device "@executable_path/../Frameworks"
+	rm -rf gpt4all.net.Runtime/macos
 	mkdir -p gpt4all.net.Runtime/macos
 	cp runtimes/macos/libllmodel.dylib gpt4all.net.Runtime/macos/libllmodel.dylib
-	cp runtimes/macos/libllama.dylib gpt4all.net.Runtime/macos/libllama.dylib
-	install_name_tool -add_rpath "@executable_path/../MonoBundle" gpt4all.net.Runtime/macos/libllama.dylib
+	cp runtimes/macos/libmpt*.dylib gpt4all.net.Runtime/macos/
+	cp runtimes/macos/libgpt*.dylib gpt4all.net.Runtime/macos/
+	cp runtimes/macos/libllama*.dylib gpt4all.net.Runtime/macos/
+	./rpath_setup.zsh gpt4all.net.Runtime/macos "@executable_path/../MonoBundle"
+	rm -rf gpt4all.net.Runtime/maccatalyst
 	mkdir -p gpt4all.net.Runtime/maccatalyst
 	cp runtimes/maccatalyst/libllmodel.dylib gpt4all.net.Runtime/maccatalyst/libllmodel.dylib
-	cp runtimes/maccatalyst/libllama.dylib gpt4all.net.Runtime/maccatalyst/libllama.dylib
-	install_name_tool -add_rpath "@executable_path/../MonoBundle" gpt4all.net.Runtime/maccatalyst/libllama.dylib
+	cp runtimes/maccatalyst/libmpt*.dylib gpt4all.net.Runtime/maccatalyst/
+	cp runtimes/maccatalyst/libgpt*.dylib gpt4all.net.Runtime/maccatalyst/
+	cp runtimes/maccatalyst/libllama*.dylib gpt4all.net.Runtime/maccatalyst/
+	./rpath_setup.zsh gpt4all.net.Runtime/maccatalyst "@executable_path/../MonoBundle"
 
 android_arm64-v8a:
 	rm -rf build/android-arm64-v8a

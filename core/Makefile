@@ -41,19 +41,23 @@ linux: linux_x64 linux_arm64
 
 linux_x64:
 	rm -rf build/linux-x64
-	cmake $(CMAKE_COMMANDS) -DCMAKE_TOOLCHAIN_FILE=Toolchain-linux-x64-musl.cmake -S . -B build/linux-x64
+	cmake $(CMAKE_COMMANDS) -DCMAKE_TOOLCHAIN_FILE=Toolchain-linux-x64.cmake -S . -B build/linux-x64
 	cmake --build build/linux-x64 --config $(BUILD_TYPE)
 	mkdir -p gpt4all.net.Runtime/linux-x64
 	cp build/linux-x64/gpt4all/libllmodel.so gpt4all.net.Runtime/linux-x64/libllmodel.so
-	cp build/linux-x64/gpt4all/llama.cpp/libllama.so gpt4all.net.Runtime/linux-x64/libllama.so
+	cp build/linux-x64/gpt4all/libllama*.so gpt4all.net.Runtime/linux-x64/
+	cp build/linux-x64/gpt4all/libreplit*.so gpt4all.net.Runtime/linux-x64/
+	cp build/linux-x64/gpt4all/libmpt*.so gpt4all.net.Runtime/linux-x64/
 
 linux_arm64:
 	rm -rf build/linux-arm64
-	cmake $(CMAKE_COMMANDS) -DCMAKE_TOOLCHAIN_FILE=Toolchain-linux-arm64-musl.cmake -S . -B build/linux-arm64
+	cmake $(CMAKE_COMMANDS) -DCMAKE_TOOLCHAIN_FILE=Toolchain-linux-arm64.cmake -S . -B build/linux-arm64
 	cmake --build build/linux-arm64 --config $(BUILD_TYPE)
 	mkdir -p gpt4all.net.Runtime/linux-arm64
 	cp build/linux-arm64/gpt4all/libllmodel.so gpt4all.net.Runtime/linux-arm64/libllmodel.so
-	cp build/linux-arm64/gpt4all/llama.cpp/libllama.so gpt4all.net.Runtime/linux-arm64/libllama.so
+	cp build/linux-arm64/gpt4all/libllama*.so gpt4all.net.Runtime/linux-arm64/
+	cp build/linux-arm64/gpt4all/libreplit*.so gpt4all.net.Runtime/linux-arm64/
+	cp build/linux-arm64/gpt4all/libmpt*.so gpt4all.net.Runtime/linux-arm64/
 
 macos:
 	rm -rf build/macos

@@ -87,7 +87,7 @@ ios_simulator:
 
 maccatalyst_x64:
 	rm -rf build/maccatalyst_x64
-	cmake $(CMAKE_PARAMETERS) -DCMAKE_SYSTEM_PROCESSOR=x86_64 -DCMAKE_HOST_SYSTEM_PROCESSOR=x86_64 -DCMAKE_SYSTEM_NAME=Darwin -DBUILD_UNIVERSAL="OFF" -DCMAKE_OSX_ARCHITECTURES="x86_64" -DCMAKE_CXX_FLAGS="-target x86_64-apple-ios13.1-macabi" -DCMAKE_C_FLAGS="-target x86_64-apple-ios13.1-macabi" -S . -B build/maccatalyst_x64
+	cmake $(CMAKE_PARAMETERS) -DCMAKE_SYSTEM_PROCESSOR=x86_64 -DCMAKE_HOST_SYSTEM_PROCESSOR=x86_64 -DCMAKE_SYSTEM_NAME=Darwin -DBUILD_UNIVERSAL="OFF" -DBUILD_METAL="OFF" -DCMAKE_OSX_ARCHITECTURES="x86_64" -DCMAKE_CXX_FLAGS="-target x86_64-apple-ios13.1-macabi" -DCMAKE_C_FLAGS="-target x86_64-apple-ios13.1-macabi" -S . -B build/maccatalyst_x64
 	cmake --build build/maccatalyst_x64
 	mkdir -p runtimes/maccatalyst_x64
 	cp build/maccatalyst_x64/gpt4all/libllmodel.dylib runtimes/maccatalyst_x64/libllmodel.dylib
@@ -97,7 +97,7 @@ maccatalyst_x64:
 
 maccatalyst_arm64:
 	rm -rf build/maccatalyst_arm64
-	cmake $(CMAKE_PARAMETERS) -DCMAKE_SYSTEM_PROCESSOR=arm -DCMAKE_HOST_SYSTEM_PROCESSOR=arm64 -DCMAKE_SYSTEM_NAME=Darwin -DBUILD_UNIVERSAL="OFF" -DCMAKE_OSX_ARCHITECTURES="arm64" -DCMAKE_CXX_FLAGS="-target arm64-apple-ios13.1-macabi" -DCMAKE_C_FLAGS="-target arm64-apple-ios13.1-macabi" -S . -B build/maccatalyst_arm64
+	cmake $(CMAKE_PARAMETERS) -DCMAKE_SYSTEM_PROCESSOR=arm -DCMAKE_HOST_SYSTEM_PROCESSOR=arm64 -DCMAKE_SYSTEM_NAME=Darwin -DBUILD_UNIVERSAL="OFF" -DBUILD_METAL="OFF" -DCMAKE_OSX_ARCHITECTURES="arm64" -DCMAKE_CXX_FLAGS="-target arm64-apple-ios13.1-macabi" -DCMAKE_C_FLAGS="-target arm64-apple-ios13.1-macabi" -S . -B build/maccatalyst_arm64
 	cmake --build build/maccatalyst_arm64
 	mkdir -p runtimes/maccatalyst_arm64
 	cp build/maccatalyst_arm64/gpt4all/libllmodel.dylib runtimes/maccatalyst_arm64/libllmodel.dylib
@@ -182,7 +182,9 @@ android_arm64-v8a:
 	cmake --build build/android-arm64-v8a
 	mkdir -p gpt4all.net.Runtime/android-arm64-v8a
 	cp build/android-arm64-v8a/gpt4all/libllmodel.so gpt4all.net.Runtime/android-arm64-v8a/libllmodel.so
-	cp build/android-arm64-v8a/gpt4all/llama.cpp/libllama.so gpt4all.net.Runtime/android-arm64-v8a/libllama.so
+	cp build/android-arm64-v8a/gpt4all/libllama*.so gpt4all.net.Runtime/android-arm64-v8a/
+	cp build/android-arm64-v8a/gpt4all/libreplit*.so gpt4all.net.Runtime/android-arm64-v8a/
+	cp build/android-arm64-v8a/gpt4all/libmpt*.so gpt4all.net.Runtime/android-arm64-v8a/
 
 android_x86:
 	rm -rf build/android-x86
@@ -190,7 +192,9 @@ android_x86:
 	cmake --build build/android-x86
 	mkdir -p gpt4all.net.Runtime/android-x86
 	cp build/android-x86/gpt4all/libllmodel.so gpt4all.net.Runtime/android-x86/libllmodel.so
-	cp build/android-x86/gpt4all/llama.cpp/libllama.so gpt4all.net.Runtime/android-x86/libllama.so
+	cp build/android-x86/gpt4all/libllama*.so gpt4all.net.Runtime/android-x86/
+	cp build/android-x86/gpt4all/libreplit*.so gpt4all.net.Runtime/android-x86/
+	cp build/android-x86/gpt4all/libmpt*.so gpt4all.net.Runtime/android-x86/
 
 android_x64:
 	rm -rf build/android-x86_64
@@ -198,7 +202,9 @@ android_x64:
 	cmake --build build/android-x86_64
 	mkdir -p gpt4all.net.Runtime/android-x86_64
 	cp build/android-x86_64/gpt4all/libllmodel.so gpt4all.net.Runtime/android-x86_64/libllmodel.so
-	cp build/android-x86_64/gpt4all/llama.cpp/libllama.so gpt4all.net.Runtime/android-x86_64/libllama.so
+	cp build/android-x86_64/gpt4all/libllama*.so gpt4all.net.Runtime/android-x86_64/
+	cp build/android-x86_64/gpt4all/libreplit*.so gpt4all.net.Runtime/android-x86_64/
+	cp build/android-x86_64/gpt4all/libmpt*.so gpt4all.net.Runtime/android-x86_64/
 
 xcframework_libllama:
 	mkdir -p output/lib

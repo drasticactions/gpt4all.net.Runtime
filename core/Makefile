@@ -8,8 +8,6 @@ NDK :=
 ifeq ($(strip $(NDK_PATH)),)
     ifeq ($(shell test -d $(HOME)/Library/Developer/Xamarin/android-sdk-macosx/ndk-bundle && echo -n yes),yes)
         NDK := $(HOME)/Library/Developer/Xamarin/android-sdk-macosx/ndk-bundle
-    else
-        $(error NDK_PATH not defined and NDK not found at default location on Mac.)
     endif
 else
     NDK := $(strip $(NDK_PATH))

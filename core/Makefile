@@ -59,7 +59,7 @@ linux_arm64:
 
 macos:
 	rm -rf build/macos
-	cmake $(CMAKE_PARAMETERS) -DCMAKE_OSX_ARCHITECTURES="arm64;x86_64" -S . -B build/macos
+	cmake $(CMAKE_PARAMETERS) -DCMAKE_OSX_ARCHITECTURES="arm64;x86_64" -DBUILD_METAL="ON" -S . -B build/macos
 	cmake --build build/macos
 	mkdir -p runtimes/macos
 	cp build/macos/gpt4all/libllmodel.dylib runtimes/macos/libllmodel.dylib

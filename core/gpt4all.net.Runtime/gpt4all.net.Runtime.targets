@@ -69,13 +69,7 @@
             <TargetPath>Frameworks\libllmodel.dylib</TargetPath>
         </None>
     </ItemGroup>
-      <ItemGroup Condition="$(TargetFramework.Contains('-windows')) == true or $(TargetFramework.Contains('-')) == false">
-        <None Visible="false" Include="$(MSBuildThisFileDirectory)win-x64\llama.dll">
-            <Pack>true</Pack>
-            <PackageCopyToOutput>true</PackageCopyToOutput>
-            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-            <TargetPath>llama.dll</TargetPath>
-        </None>
+    <ItemGroup Condition="$(TargetFramework.Contains('-windows')) == true or $(TargetFramework.Contains('-')) == false">
          <None Visible="false" Include="$(MSBuildThisFileDirectory)win-x64\libllmodel.dll">
             <Pack>true</Pack>
             <PackageCopyToOutput>true</PackageCopyToOutput>
@@ -113,66 +107,27 @@
             <Abi>arm64-v8a</Abi>
         </AndroidNativeLibrary>
     </ItemGroup>
-    <ItemGroup Condition="$(TargetFramework.Contains('-')) == false ">
-        <None Visible="false" Include="$(MSBuildThisFileDirectory)macos\libllama.dylib">
+    <ItemGroup Condition="$(TargetFramework.Contains('-')) == false and $([MSBuild]::IsOSPlatform('osx'))">
+        <None Visible="false" Include="$(MSBuildThisFileDirectory)macos\libgptj*.dylib">
             <Pack>true</Pack>
             <PackageCopyToOutput>true</PackageCopyToOutput>
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-            <TargetPath>libllama.dylib</TargetPath>
+        </None>
+        <None Visible="false" Include="$(MSBuildThisFileDirectory)macos\libllama*.dylib">
+            <Pack>true</Pack>
+            <PackageCopyToOutput>true</PackageCopyToOutput>
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </None>
+        <None Visible="false" Include="$(MSBuildThisFileDirectory)macos\libmtp*.dylib">
+            <Pack>true</Pack>
+            <PackageCopyToOutput>true</PackageCopyToOutput>
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </None>
          <None Visible="false" Include="$(MSBuildThisFileDirectory)macos\libllmodel.dylib">
             <Pack>true</Pack>
             <PackageCopyToOutput>true</PackageCopyToOutput>
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
             <TargetPath>libllmodel.dylib</TargetPath>
-        </None>
-        <None Visible="false" Include="$(MSBuildThisFileDirectory)macos\libllama.dylib">
-            <Pack>true</Pack>
-            <PackageCopyToOutput>true</PackageCopyToOutput>
-            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-            <TargetPath>runtimes/osx-x64/libllama.dylib</TargetPath>
-        </None>
-         <None Visible="false" Include="$(MSBuildThisFileDirectory)macos\libllmodel.dylib">
-            <Pack>true</Pack>
-            <PackageCopyToOutput>true</PackageCopyToOutput>
-            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-            <TargetPath>runtimes/osx-x64/libllmodel.dylib</TargetPath>
-        </None>
-         <None Visible="false" Include="$(MSBuildThisFileDirectory)macos\libllama.dylib">
-            <Pack>true</Pack>
-            <PackageCopyToOutput>true</PackageCopyToOutput>
-            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-            <TargetPath>runtimes/osx-arm64/libllama.dylib</TargetPath>
-        </None>
-         <None Visible="false" Include="$(MSBuildThisFileDirectory)macos\libllmodel.dylib">
-            <Pack>true</Pack>
-            <PackageCopyToOutput>true</PackageCopyToOutput>
-            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-            <TargetPath>runtimes/osx-arm64/libllmodel.dylib</TargetPath>
-        </None>
-        <None Visible="false" Include="$(MSBuildThisFileDirectory)linux-arm64\libllama.so">
-            <Pack>true</Pack>
-            <PackageCopyToOutput>true</PackageCopyToOutput>
-            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-            <TargetPath>runtimes/linux-arm64/libllama.so</TargetPath>
-        </None>
-          <None Visible="false" Include="$(MSBuildThisFileDirectory)linux-arm64\libllmodel.so">
-            <Pack>true</Pack>
-            <PackageCopyToOutput>true</PackageCopyToOutput>
-            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-            <TargetPath>runtimes/linux-arm64/libllmodel.so</TargetPath>
-        </None>
-        <None Visible="false" Include="$(MSBuildThisFileDirectory)linux-x64\libllama.so">
-            <Pack>true</Pack>
-            <PackageCopyToOutput>true</PackageCopyToOutput>
-            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-            <TargetPath>runtimes/linux-x64/libllama.so</TargetPath>
-        </None>
-        <None Visible="false" Include="$(MSBuildThisFileDirectory)linux-x64\libllmodel.so">
-            <Pack>true</Pack>
-            <PackageCopyToOutput>true</PackageCopyToOutput>
-            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-            <TargetPath>runtimes/linux-x64/libllmodel.so</TargetPath>
         </None>
     </ItemGroup>
 </Project>

@@ -1,5 +1,5 @@
 @echo off
-
+set "BUILD_TYPE=Release"
 set "BUILD_DIR=.\build\win-x64-msvc"
 set "LIBS_DIR=.\gpt4all.net.Runtime\win-x64"
 

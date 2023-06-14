@@ -76,6 +76,11 @@
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
             <TargetPath>libllmodel.dll</TargetPath>
         </None>
+         <None Visible="false" Include="$(MSBuildThisFileDirectory)win-x64\lib*.dll">
+            <Pack>true</Pack>
+            <PackageCopyToOutput>true</PackageCopyToOutput>
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </None>
         <None Visible="false" Include="$(MSBuildThisFileDirectory)win-x64\gptj*.dll">
             <Pack>true</Pack>
             <PackageCopyToOutput>true</PackageCopyToOutput>
